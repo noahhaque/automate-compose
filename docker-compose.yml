@@ -1,0 +1,8 @@
+---
+
+version: "3"
+services:
+  run-app:
+    image: noah117/java-app:0.0.1
+    ports:
+      - "8080:8080"
