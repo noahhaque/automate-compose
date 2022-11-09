@@ -21,4 +21,4 @@ jobs:
         AWS_DEFAULT_REGION: us-east-2
     
     - name: test working directory and list contents  
-      run: pwd && ls -al 
+      run: ls -al 
