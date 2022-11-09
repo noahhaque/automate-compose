@@ -1,0 +1,21 @@
+name: Start a stopped ec2 instance, then copy over a docker compose file to be ran on the instance
+
+on:
+  push:   
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build: 
+
+    runs-on: ubuntu-latest
+
+      - name: Start AWS EC2
+          run: |
+            aws ec2 start-instances --instance-ids i-0cb23d3507b57abb0
+          env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: us-east-2
+          run: pwd && ls -al 
