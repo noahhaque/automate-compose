@@ -11,11 +11,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
-      - name: Start AWS EC2
-          run: |
-            aws ec2 start-instances --instance-ids i-0cb23d3507b57abb0
-          env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_DEFAULT_REGION: us-east-2
-          run: pwd && ls -al 
+    steps: 
+    - name: Start AWS EC2
+      run: |
+        aws ec2 start-instances --instance-ids i-0cb23d3507b57abb0
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-2
+    
+    - name: test working directory and list contents  
+      run: pwd && ls -al 
