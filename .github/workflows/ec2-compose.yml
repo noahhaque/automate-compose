@@ -10,34 +10,13 @@ jobs:
   build: 
 
     runs-on: ubuntu-latest
-
-    steps: 
-    - name: Start AWS EC2
-      run: |
-        aws ec2 start-instances --instance-ids i-0cb23d3507b57abb0
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: us-east-2
-    
-    - name: Obtain instance public IP and copy over compose file 
-      uses: garygrossgarten/github-action-scp@release
-      with:
-        local: automate-compose/docker-compose.yml
-        remote: /home/ubuntu/docker-compose.yml
-        host: $TEST
-        username: ${{ secrets.SSH_USER }}
-        privateKey: ${{ secrets.PASSWORD }}
-        verbose: true 
-
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TEST: $(aws --region us-east-2 \
-         ec2 describe-instances \
-         --filters \
-         "Name=instance-id,Values=i-0cb23d3507b57abb0" \
-         --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
-         --output text)
-        
+     steps:
+     - name: copy file via ssh password
+       uses: appleboy/scp-action@master
+       with:
+         host: 3.137.182.108
+         username: ${{ secrets.USERNAME }}
+         key: ${{ secrets.PASSWORD }}
+         source: "docker-compose.yml"
+         target: "/home/ubuntu/"
       
