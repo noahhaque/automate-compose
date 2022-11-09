@@ -21,14 +21,6 @@ jobs:
         AWS_DEFAULT_REGION: us-east-2
     
     - name: Obtain instance public IP and copy over compose file 
-      run: |
-        TEST=$(aws --region us-east-2 \
-        ec2 describe-instances \
-        --filters \
-        "Name=instance-id,Values=i-0cb23d3507b57abb0" \
-        --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
-        --output text)
-
       uses: garygrossgarten/github-action-scp@release
       with:
         local: automate-compose/docker-compose.yml
@@ -41,5 +33,11 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        TEST: $(aws --region us-east-2 \
+         ec2 describe-instances \
+         --filters \
+         "Name=instance-id,Values=i-0cb23d3507b57abb0" \
+         --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
+         --output text)
         
       
