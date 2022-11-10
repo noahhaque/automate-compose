@@ -17,6 +17,6 @@ jobs:
       with:
         host: 3.137.182.108
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.PASSWORD }}
         source: "docker-compose.yml"
         target: "/home/ubuntu/"
