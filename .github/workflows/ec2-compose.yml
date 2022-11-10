@@ -27,4 +27,4 @@ jobs:
         host: 3.137.182.108
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.PASSWORD }}
-        script: docker-compose up
+        script: docker-compose up -d
